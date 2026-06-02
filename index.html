@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2 Dakikada 10 Soru</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <div class="topbar simple">
+        <h1>2 Dakikada 10 Soru</h1>
+        <div class="timer" id="timer">02:00</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-text">
+          <span id="questionCount">1 / 10</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progressFill"></div>
+        </div>
+      </div>
+
+      <button id="questionButton" class="question" type="button"></button>
+
+      <div class="controls">
+        <button id="backButton" type="button">← Geri</button>
+        <button id="partnerButton" class="turn-button sira-sende-btn" type="button">👥 Sıra Sende</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+<script>
+(function () {
+  function styleSiraSendeButtons() {
+    document.querySelectorAll("button").forEach(function (btn) {
+      if ((btn.textContent || "").includes("Sıra Sende")) {
+        if (!(btn.textContent || "").includes("👥")) {
+          btn.textContent = "👥 " + btn.textContent.trim();
+        }
+        btn.classList.add("sira-sende-btn");
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", styleSiraSendeButtons);
+  document.addEventListener("click", function () {
+    setTimeout(styleSiraSendeButtons, 0);
+  });
+  setInterval(styleSiraSendeButtons, 500);
+})();
+</script>
+<script>
+(function () {
+  function markBaslaScreen() {
+    var cards = document.querySelectorAll(".question-card, .card, #questionCard, #question, [data-question-card]");
+    cards.forEach(function (card) {
+      var txt = (card.textContent || "").trim();
+      if (txt === "Başla") {
+        card.classList.add("start-screen");
+      } else {
+        card.classList.remove("start-screen");
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", markBaslaScreen);
+  document.addEventListener("click", function () { setTimeout(markBaslaScreen, 0); });
+  setInterval(markBaslaScreen, 400);
+})();
+</script>
+</body>
+</html>
